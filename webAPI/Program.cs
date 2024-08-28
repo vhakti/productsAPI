@@ -13,6 +13,7 @@ namespace webAPI
     using Autofac;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.Extensions.Caching.Memory;
+    using System.Collections.Concurrent;
 
     public class Program
     {
@@ -55,22 +56,18 @@ namespace webAPI
             app.MapControllers();
 
             AddCacheItems(app);
-
-            app.Run();
-            
+            app.Run();          
            
-
         }
 
         private static void AddCacheItems(WebApplication app)
         {
             var cache = app.Services.GetRequiredService<IMemoryCache>();
 
-       
-            
-            Dictionary<int, string> status_prod = new Dictionary<int, string>();
-            status_prod.Add(0, "Inactive");
-            status_prod.Add(1, "Active");
+
+            ConcurrentDictionary<int, string> status_prod = new ConcurrentDictionary<int, string>();
+            status_prod.TryAdd(0, "Inactive");
+            status_prod.TryAdd(1, "Active");
             cache.Set("status_product", status_prod, TimeSpan.FromMinutes(5));
         }
     }

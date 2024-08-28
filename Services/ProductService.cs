@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Model;
 using Model.DTOs;
 using Model.Ports;
+using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 
 namespace Services
@@ -51,7 +52,7 @@ namespace Services
         {
             try
             {
-                Dictionary<int, string> status_prod;
+                ConcurrentDictionary<int, string> status_prod;
                 _memCache.TryGetValue($"status_product", out status_prod);
                 
                     var disc = await this._extService.GetDiscountProduct(id);

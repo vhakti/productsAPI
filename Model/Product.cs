@@ -4,7 +4,7 @@ namespace Model
 {
     public class Product:BaseClass
     {
-       
+        
         public required string Name { get; set; }
         public int Status { get; set; }
         public required int Stock { get; set; }
